@@ -114,3 +114,58 @@ def two_fractions_from_phasor(
         distances_to_first_component / total_distance_between_components
     )
     return 1 - fraction_of_second_component, fraction_of_second_component
+
+
+def multi_harmonic_unmimixing_from_phasor(
+        real: ArrayLike,
+        imag: ArrayLike,
+        ncomponents: int,
+        MatrixA: ArrayLike,
+        /,
+)-> ArrayLike:
+    """Return fractions of components from phasor coordinates 
+    for n components.
+
+    Parameters
+    ----------
+    real : array_like
+        Real component of phasor coordinates.
+    imag : array_like
+        Imaginary component of phasor coordinates.
+
+    Returns
+    -------
+    fractions: ndarray
+        Fractions for each components.
+
+    Raises
+    ------
+    ValueError
+
+    Examples
+    --------
+
+    """
+    if isinstance(ncomponents, int) and ncomponents > 0:
+        nh = math.floor(ncomponents/2)
+        fractions = numpy.zeros([real.shape[0], real.shape[1], ncomponents])
+        for r in range(0, fractions.shape[0]):
+            for c in range(0, fractions.shape[1]):
+                aux = []
+                for j in range(0, nh):
+                    aux.append(real[r][c][j])
+                    aux.append(imag[r][c][j])
+                aux.append(1)
+                vecB = numpy.array(aux)
+                fractions[r][c] = numpy.where(
+                    numpy.isnan(real[r][c]),
+                    numpy.nan * numpy.ones(ncomponents),
+                    numpy.linalg.lstsq(MatrixA, vecB, rcond=None)[0],
+                )
+    else:
+        raise ValueError(
+            "ncomponents must be an integer greater than or equal to 1"
+        )
+    return fractions
+
+
