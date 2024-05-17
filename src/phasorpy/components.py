@@ -288,4 +288,3 @@ def multi_harmonic_phasor(
             multi_hamonic_real[:, :, i] = real
             multi_hamonic_imag[:, :, i] = imag
     return multi_hamonic_real, multi_hamonic_imag
-

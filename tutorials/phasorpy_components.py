@@ -109,14 +109,14 @@ plt.show()
 #
 # Multi harmonic unmixing for many components.
 
-df = pandas.read_csv("/Users/schutyb/Documents/GitHub/phasorpy/tutorials/pure_components.csv")
+df = pandas.read_csv("/Users/schutyb/Documents/GitHub/phasorpy/components_deltas_test.csv")
 
 plt.figure(1)
-plt.plot(df["lambda"], df["Component1"], "r", label="alexa594")
-plt.plot(df["lambda"], df["Component2"], "g", label="atto488")
-plt.plot(df["lambda"], df["Component3"], "b", label="cerulean")
-plt.plot(df["lambda"], df["Component4"], "orange", label="mitotracker_orange")
-plt.plot(df["lambda"], df["Combination"], "k", label="Combination")
+plt.plot(df["lambda"], df["Component1"], "violet", label="Component1")
+plt.plot(df["lambda"], df["Component2"], "b", label="Component2")
+plt.plot(df["lambda"], df["Component3"], "g", label="Component3")
+plt.plot(df["lambda"], df["Component4"], "y", label="Component4")
+#plt.plot(df["lambda"], df["Combination"], "k", label="Combination")
 plt.legend()
 
 phasor_c1 = phasor_from_signal(df["Component1"], harmonic=[1, 2])
@@ -146,4 +146,3 @@ plot.components(real, imag, fractions)
 plot.components(numpy.asarray([multi_harmonic_real[0]]), 
                 numpy.asarray([multi_harmonic_imag[1]]))
 plot.show()
-
